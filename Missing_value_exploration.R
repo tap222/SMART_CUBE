@@ -28,9 +28,12 @@ library(Amelia)
 ###Data Summary####
 describe(data
 describe(data)
-
 str(data)
 
+ ##columnwise percentage of missing values
+pMiss <- function(x){sum(is.na(x))/length(x)*100}  # to find percentage of the missing column vise,
+apply(tr,2,pMiss)
+apply(te,2,pMiss)
 ####Plot missing value####
 missmap(data)
 aggr(data,prop = F, numbers = T)
