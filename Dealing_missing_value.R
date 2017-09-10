@@ -60,3 +60,24 @@ hist(train$NumberOfDependents, freq=F, main='NumberOfDependents: Original Data',
 hist(imp.train_raw$NumberOfDependents, freq=F, main='NumberOfDependents: MICE Output', 
      col='lightgreen', ylim=c(0,0.04))
 write.csv(test,'cs-test-missing-mice.csv')
+
+######################### Rpart ########################################################
+library(plyr);      # load plyr prior to dplyr to avoid warnings
+library(caret);     # A nice machine learning wrapper library 
+library(dplyr);     # data manipulation
+library(gridExtra); # multiple plots in one page
+library(rpart.plot);# nice plots for rpart trees 
+trControl <- trainControl(method="repeatedcv", number=7, repeats=5) 
+Incomemiss <- which(is.na(MonthlyIncome))
+model_f   <- train(MonthlyIncome ~ RevolvingUtilizationOfUnsecuredLines + age + NumberOfOpenCreditLinesAndLoans,
+                    data = train %>% filter(!is.na(MonthlyIncome)),
+                    trControl = trControl, method="rpart", na.action = na.pass, tuneLength = 5)
+train$MonthlyIncome[Incomemiss] = predict(model_f, train[Incomemiss,])
+rpart.plot(model_f$finalModel)
+dependentmiss <- which(is.na(NumberOfDependents))
+model_f   <- train( NumberOfDependents ~ RevolvingUtilizationOfUnsecuredLines + age + NumberOfOpenCreditLinesAndLoans,,
+                    data = train %>% filter(!is.na(NumberOfDependents)),
+                    trControl = trControl, method="rpart", na.action = na.pass, tuneLength = 5)
+train$NumberOfDependents[dependentmiss] = predict(model_f, train[dependentmiss,])
+rpart.plot(model_f$finalModel)
+write.csv(test,'cs-test-missing-rpart.csv')
