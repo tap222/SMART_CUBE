@@ -47,4 +47,16 @@ train_complete <- complete(imp.train_raw)
 
 #Confirm no NAs
 sum(sapply(train_complete, function(x) { sum(is.na(x)) }))
+# Plot MonthlyIncome distributions
+par(mfrow=c(1,2))
+hist(train$MonthlyIncome, freq=F, main='MonthlyIncome: Original Data', 
+     col='darkgreen', ylim=c(0,0.04))
+hist(imp.train_raw$MonthlyIncome, freq=F, main='MonthlyIncome: MICE Output', 
+     col='lightgreen', ylim=c(0,0.04))
+# Plot Number of Dependents distributions
+par(mfrow=c(1,2))
+hist(train$NumberOfDependents, freq=F, main='NumberOfDependents: Original Data', 
+     col='darkgreen', ylim=c(0,0.04))
+hist(imp.train_raw$NumberOfDependents, freq=F, main='NumberOfDependents: MICE Output', 
+     col='lightgreen', ylim=c(0,0.04))
 write.csv(test,'cs-test-missing-mice.csv')
