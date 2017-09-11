@@ -1,4 +1,4 @@
-setwd('F:/Miaozhi/Academic/Data_Science/Bootcamp/Project_Capstone/nycdsa-capstone')
+setwd('/home/tapas)
 data = read.csv('cs-training-feature-04.csv', header =T)
 names(data)
 library(dplyr)
