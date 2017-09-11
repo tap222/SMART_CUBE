@@ -1,7 +1,6 @@
 rm(list=ls())
 setwd('/home//tapas/')
-data = read.csv('cs-training-feature-01.csv', header =T)
-test = read.csv('cs-test-feature-01.csv',header=T)
+data = read.csv('cs-trainig-feature-07.csv', header =T)
 names(data)
 summary(data)
 describe()
@@ -40,7 +39,7 @@ ggplot(data=data, aes(data$NumberRealEstateLoansOrLines)) + geom_histogram()
 
 write.csv(data,'cs-training-feature-last.csv')
 
-test = read.csv('cs-test.csv', header =T)
+test = read.csv('cs-test-feature-07.csv', header =T)
 summary(test)
 decribe(test)
 
