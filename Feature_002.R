@@ -6,11 +6,12 @@
 # The 70 plus age group has an average score of 747.
 # Agerisk = 1 - (CreditScore / 850)
 setwd('/home/tapas/')
-data = read.csv('cs-trainig-outlier.csv', header =T)
+data = read.csv('cs-training-feature-01.csv', header =T)
+test = read.csv('cs-test-feature-01.csv', header = T)
 View(data)
 str(data)
 sum(is.na(data))
-#test = read.csv('cs-test-outlier.csv', header = T)
+
 
 
 AgeRisk=1:150000
@@ -67,5 +68,5 @@ data = data[,-4]
 test = test[,-4]
 data = as.data.frame(cbind(data,AgeRisk))
 test = as.data.frame(cbind(test,AgeRisk))
-write.csv(data,'cs-training-outlier-agerisk.csv')
-write.csv(test,'cs-test-outlier-agerisk.csv')
+write.csv(data,'cs-training-feature-02.csv')
+write.csv(test,'cs-test-feature-02.csv')
