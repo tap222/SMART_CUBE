@@ -1,5 +1,6 @@
 setwd('/home/tapas/')
 data = read.csv('cs-trainig-outlier.csv', header =T)
+data = read.csv('cs-test-outlier.csv', header =T)
 
 Debt = data$MonthlyIncome * data$DebtRatio
 data = as.data.frame(cbind(data,Debt))
