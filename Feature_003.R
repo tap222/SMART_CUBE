@@ -1,16 +1,6 @@
 setwd('/home/tapas')
 data = read.csv('cs-training-feature-02.csv',header =T)
 test = read.csv('cs-test-feature-02.csv',header =T)
-r=c(0.105,0.089,0.119)
-
-sum = sum(r)
-
-w1 = r[1]/sum
-w2 = r[2]/sum
-w3 = r[3]/sum
-
-default_time = w1 * data$NumberOfTime3059DaysPastDueNotWorse +w2 * data$NumberOfTime6089DaysPastDueNotWorse + w3 * data$NumberOfTimes90DaysLate
-DebtAmt = data$DebtRatio * as.numeric(data$MonthlyIncome)
 
 new = data %>% filter(MonthlyIncome != 0)%>%group_by(NumberOfDependents) %>% summarise(avg=median(MonthlyIncome,na.rm=T))
 
