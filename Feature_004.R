@@ -1,5 +1,5 @@
 setwd('/home/tapas')
-data = read.csv('cs-training-feature-06.csv', header =T)
+data = read.csv('cs-training-feature-03.csv', header =T)
 
 require(rms)
 names(data)
@@ -25,10 +25,10 @@ w3 = r[3]/sum
 default_time = w1 * data$NumberOfTime3059DaysPastDueNotWorse +w2 * data$NumberOfTime6089DaysPastDueNotWorse + w3 * data$NumberOfTimes90DaysLate
 data = as.data.frame(cbind(data,default_time))
 data = data[,-c(5,9,11)]
-write.csv(data,'cs-trainig-feature-07.csv')
+write.csv(data,'cs-trainig-feature-04.csv')
 
-test = read.csv('cs-test-feature-06.csv')
+test = read.csv('cs-test-feature-03.csv')
 default_time = w1 * test$NumberOfTime3059DaysPastDueNotWorse +w2 * test$NumberOfTime6089DaysPastDueNotWorse + w3 * test$NumberOfTimes90DaysLate
 test = as.data.frame(cbind(test,default_time))
 test = test[,-c(5,9,11)]
-write.csv(test,'cs-test-feature-07.csv')
+write.csv(test,'cs-test-feature-04.csv')
