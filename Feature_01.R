@@ -1,6 +1,7 @@
 rm(list=ls())
 setwd('/home//tapas/')
-data = data = read.csv('cs-training.csv', header =T)
+data = read.csv('cs-training-feature-01.csv', header =T)
+test = read.csv('cs-test-feature-01.csv',header=T)
 names(data)
 summary(data)
 describe()
@@ -37,7 +38,7 @@ ggplot(data=data, aes(data$NumberOfDependents)) + geom_histogram()
 data$NumberRealEstateLoansOrLines = log((data$NumberRealEstateLoansOrLine)+1)
 ggplot(data=data, aes(data$NumberRealEstateLoansOrLines)) + geom_histogram()
 
-write.csv(data,'cs-training-log-f10.csv')
+write.csv(data,'cs-training-feature-last.csv')
 
 test = read.csv('cs-test.csv', header =T)
 summary(test)
@@ -70,4 +71,4 @@ ggplot(data=test, aes(test$NumberOfDependents)) + geom_histogram()
 data$NumberRealEstateLoansOrLines = log((test$NumberRealEstateLoansOrLine)+1)
 ggplot(data=test, aes(data$NumberRealEstateLoansOrLines)) + geom_histogram()
 
-write.csv(test,'cs-test-log-f10.csv')
+write.csv(test,'cs-test-feature-last.csv')
