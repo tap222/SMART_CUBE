@@ -1,6 +1,7 @@
 rm(list = ls()); gc()
 setwd('/home/tapas/')
 data = read.csv('cs-training.csv', header =T)
+data = read.csv('cs-test.csv', header =T)
 data = data[ ,-1]
 
 library(VIM)
@@ -20,16 +21,24 @@ library(Amelia) ##missmap
 ###Data Summary####
 describe(data)
 str(data)
-##Rowwise miss value
+describe(test)
+str(test)
+##Rowwise miss value Train
 sort(sapply(data, function(x) { sum(is.na(x)) }), decreasing=TRUE)
-####Plot missing value####
+####Plot missing value train####
 missmap(data, y.labels = NULL, y.at = NULL, col = c("#CC3399", "#6699FF"), main = "Missing values vs observed")
 aggr(data,prop = F, numbers = T)
 md.pattern(data)
 matrixplot(data, interactive = F)
 ggplot(data, aes(data$SeriousDlqin2yrs,fill=!is.na(data$MonthlyIncome))) + geom_bar(position="dodge") + labs(title="Monthly Income",fill="Has Monthly Income")
 ggplot(data, aes(data$SeriousDlqin2yrs,fill=!is.na(data$NumberOfDependents))) + geom_bar(position="dodge") + labs(title="Number_of_dependent",fill="Has Dependent Income")
-
+##Rowwise miss value Test
+sort(sapply(data, function(x) { sum(is.na(x)) }), decreasing=TRUE)
+####Plot missing value test####
+missmap(test, y.labels = NULL, y.at = NULL, col = c("#CC3399", "#6699FF"), main = "Missing values vs observed")
+aggr(test,prop = F, numbers = T)
+md.pattern(test)
+matrixplot(test, interactive = F)
 
 library(reshape2)
 library(ggplot2)
@@ -54,31 +63,22 @@ ggplot_missing <- function(x){
          y = "Rows / observations")
 }
 
-#Let’s test it out
-
+#Implementing function
 ggplot_missing(data)
-
-
-####Correltion plot####
+ggplot_missing(test)
+####Correltion plot Train####
 corrplot(cor(data[complete.cases(data),]), method="circle", type = "lower", order="hclust",
          col=colorRampPalette(brewer.pal(11,"Spectral"))(8))
 cor(data[complete.cases(data),])
+####Correltion plot####
+corrplot(cor(test[complete.cases(test),]), method="circle", type = "lower", order="hclust",
+         col=colorRampPalette(brewer.pal(11,"Spectral"))(8))
+cor(data[complete.cases(test),])
 
 
-####Heat map for correlation####
+####Heat map for correlation Train####
 qplot(x=Var1, y=Var2, data=melt(cor(data[complete.cases(data),], use="p")), fill=value, geom="tile") +
   scale_fill_gradient2(limits=c(-1, 1))
-
-####PCA#####
-fa.parallel(data, #The data in question.
-            fa = "pc", #Display the eigenvalues for PCA.
-            n.iter = 100) #Number of simulated analyses to perform.
-abline(h = 1) #Adding a horizontal line at 1.
-pc_bodies = principal(data, #The data in question.
-                      nfactors = 5, #The number of PCs to extract.
-                      rotate = "none")
-pc_bodies
-
-heatmap <- qplot(x=Var1, y=Var2, data=melt(cor(data)), geom="tile",
-                 fill=value)
-heatmap
+####Heat map for correlation Test####
+qplot(x=Var1, y=Var2, data=melt(cor(test[complete.cases(test),], use="p")), fill=value, geom="tile") +
+  scale_fill_gradient2(limits=c(-1, 1))
