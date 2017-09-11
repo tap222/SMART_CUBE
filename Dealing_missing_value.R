@@ -14,7 +14,7 @@ train.data[,2:11] <- dd
 set.seed(123)
 dt <- knnImputation(test.data[,-1],k=5)
 test.data[,2:11] <- dt
-write.csv(test,'cs-test-missing-knn.csv')
+write.csv(test,'cs-test-missing.csv')
 
 ############################# MICE (Package) ###################################
 #If we can reasonably impute them we will have a lot more data to feed to a model
@@ -59,7 +59,7 @@ hist(train$NumberOfDependents, freq=F, main='NumberOfDependents: Original Data',
      col='darkgreen', ylim=c(0,0.04))
 hist(imp.train_raw$NumberOfDependents, freq=F, main='NumberOfDependents: MICE Output', 
      col='lightgreen', ylim=c(0,0.04))
-write.csv(test,'cs-test-missing-mice.csv')
+write.csv(test,'cs-test-missing.csv')
 
 ######################### Rpart ########################################################
 library(plyr);      # load plyr prior to dplyr to avoid warnings
@@ -80,4 +80,4 @@ model_f   <- train( NumberOfDependents ~ RevolvingUtilizationOfUnsecuredLines + 
                     trControl = trControl, method="rpart", na.action = na.pass, tuneLength = 5)
 train$NumberOfDependents[dependentmiss] = predict(model_f, train[dependentmiss,])
 rpart.plot(model_f$finalModel)
-write.csv(test,'cs-test-missing-rpart.csv')
+write.csv(test,'cs-test-missing.csv')
